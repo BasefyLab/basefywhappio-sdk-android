@@ -13,7 +13,6 @@ Bu kütüphane API'nin OpenAPI şemasından [OpenAPI Generator](https://openapi-
 - [Veri biçimleri](#veri-biçimleri)
 - [Uç noktalar](#uç-noktalar)
 - [Modeller](#modeller)
-- [Bakım notları](#bakım-notları)
 
 ## Kurulum
 
@@ -34,7 +33,7 @@ dependencyResolutionManagement {
 **2.** Modülün `build.gradle` dosyasına bağımlılığı ekleyin:
 
 ```gradle
-implementation 'com.github.basefylab:basefywhappio-sdk-android:1.0.1'
+implementation 'com.github.BasefyLab:basefywhappio-sdk-android:1.0.2'
 ```
 
 **3.** Uygulamanın `AndroidManifest.xml` dosyasında internet izni olduğundan emin olun:
@@ -45,16 +44,26 @@ implementation 'com.github.basefylab:basefywhappio-sdk-android:1.0.1'
 
 ## Hızlı başlangıç
 
-Her API sınıfı, sunucu adresini (`basePath`) parametre olarak alır. Varsayılan değer `http://localhost` olduğu için **adresi mutlaka verin**:
+SDK varsayılan olarak **canlı sunucuya** istek atar. Canlı ortam için adres vermenize gerek yoktur:
 
 ```kotlin
 import com.basefywhappio.sdk.apis.AuthApi
 import com.basefywhappio.sdk.apis.ConversationApi
 
-const val BASE_PATH = "https://api.ornek.com"
+val authApi = AuthApi()
+val conversationApi = ConversationApi()
+```
 
-val authApi = AuthApi(BASE_PATH)
-val conversationApi = ConversationApi(BASE_PATH)
+Test sunucusu gibi başka bir ortam kullanmak için adresi API sınıfına parametre olarak verin. Adresin sonuna `/` koymayın:
+
+```kotlin
+val authApi = AuthApi("https://<test-api-adresi>")
+```
+
+Adresi uygulamada tek bir yerde tutmanız önerilir. Örneğin `BuildConfig` içinde bir alan tanımlayıp debug ve release sürümlerine farklı değer verebilir, tüm API sınıflarına oradan geçebilirsiniz:
+
+```kotlin
+val authApi = AuthApi(BuildConfig.API_BASE_URL)
 ```
 
 SDK metotları **senkron** çalışır, yani yanıt gelene kadar bekler. Android ana thread'de ağ isteğine izin vermediği için çağrıları arka planda yapın:
