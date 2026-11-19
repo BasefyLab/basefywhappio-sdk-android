@@ -1,5 +1,5 @@
 group 'com.basefywhappio'
-version '1.0.0'
+version '1.0.2'
 
 wrapper {
     gradleVersion = '8.14.3'
@@ -69,8 +69,8 @@ publishing {
     publications {
         maven(MavenPublication) {
             groupId = 'com.basefywhappio'
-            artifactId = 'basefywhappio-sdk'
-            version = '1.0.0'
+            artifactId = 'basefywhappio-sdk-android'
+            version = '1.0.2'
             from components.java
         }
     }
