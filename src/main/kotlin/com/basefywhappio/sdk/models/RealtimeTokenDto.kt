@@ -24,8 +24,9 @@
 package com.basefywhappio.sdk.models
 
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Contextual
 
 /**
  * Canlı bağlantı token'ı.
@@ -33,16 +34,16 @@ import com.squareup.moshi.JsonClass
  * @param token Hub adresine `?token=` olarak (URL-encode edilerek) eklenir.
  * @param expiresAt Token'ın geçerlilik bitişi (UTC). Bu zamandan önce yeni token alınmalıdır.
  */
-
+@Serializable
 
 data class RealtimeTokenDto (
 
     /* Hub adresine `?token=` olarak (URL-encode edilerek) eklenir. */
-    @Json(name = "token")
+    @SerialName(value = "token")
     val token: kotlin.String? = null,
 
     /* Token'ın geçerlilik bitişi (UTC). Bu zamandan önce yeni token alınmalıdır. */
-    @Json(name = "expiresAt")
+    @Contextual @SerialName(value = "expiresAt")
     val expiresAt: java.time.OffsetDateTime? = null
 
 ) {

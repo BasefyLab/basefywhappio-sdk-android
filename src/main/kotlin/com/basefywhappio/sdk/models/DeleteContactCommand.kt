@@ -24,20 +24,21 @@
 package com.basefywhappio.sdk.models
 
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Contextual
 
 /**
  * Kişiyi siler (soft delete) — Backoffice ContactsController.Delete ile aynı.
  *
  * @param id Silinecek kişinin id'si.
  */
-
+@Serializable
 
 data class DeleteContactCommand (
 
     /* Silinecek kişinin id'si. */
-    @Json(name = "id")
+    @SerialName(value = "id")
     val id: kotlin.Int? = null
 
 ) {

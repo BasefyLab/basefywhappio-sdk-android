@@ -27,8 +27,9 @@ import com.basefywhappio.sdk.models.MessageSenderType
 import com.basefywhappio.sdk.models.MessageType
 import com.basefywhappio.sdk.models.RepliedMessageDto
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Contextual
 
 /**
  * Sohbetteki tek bir mesaj balonu.
@@ -47,57 +48,57 @@ import com.squareup.moshi.JsonClass
  * @param repliedTo 
  * @param isInternalNote Otomasyonun bıraktığı iç not: müşteriye gitmez, yalnızca temsilci görür.
  */
-
+@Serializable
 
 data class ConversationMessageDto (
 
     /* Mesaj id'si. Otomasyon iç notlarında 0'dır (Message satırı yoktur). */
-    @Json(name = "id")
+    @SerialName(value = "id")
     val id: kotlin.Int? = null,
 
     /* WhatsApp mesaj id'si. Yanıtlama (conversation/send externalIdOfReplied) ve hub'daki MarkMessageInboundAsRead bununla yapılır. */
-    @Json(name = "externalId")
+    @SerialName(value = "externalId")
     val externalId: kotlin.String? = null,
 
-    @Json(name = "messageType")
+    @Contextual @SerialName(value = "messageType")
     val messageType: MessageType? = null,
 
-    @Json(name = "senderType")
+    @Contextual @SerialName(value = "senderType")
     val senderType: MessageSenderType? = null,
 
     /* true: müşteriden gelen mesaj (sol balon). false: işletmeden giden mesaj (sağ balon). */
-    @Json(name = "isIncoming")
+    @SerialName(value = "isIncoming")
     val isIncoming: kotlin.Boolean? = null,
 
     /* Gösterilecek düz metin (metin, buton/liste cevabı, CTA gövdesi vb.). */
-    @Json(name = "text")
+    @SerialName(value = "text")
     val text: kotlin.String? = null,
 
     /* Zengin tiplerin (liste, sipariş, ürün kartı, konum…) ham kanonik içeriği (JSON metni); istemci gerektiğinde çözer. */
-    @Json(name = "contentJson")
+    @SerialName(value = "contentJson")
     val contentJson: kotlin.String? = null,
 
     /* Resim/ses/video/dosya mesajlarında medyanın adresi; diğer tiplerde null. */
-    @Json(name = "mediaUrl")
+    @SerialName(value = "mediaUrl")
     val mediaUrl: kotlin.String? = null,
 
     /* Mesaj zamanı, Unix milisaniye. */
-    @Json(name = "date")
+    @SerialName(value = "date")
     val date: kotlin.Long? = null,
 
     /* Mesaj okundu mu. */
-    @Json(name = "isRead")
+    @SerialName(value = "isRead")
     val isRead: kotlin.Boolean? = null,
 
     /* Mesajı panelden/mobilden gönderen temsilci; temsilci mesajı değilse null. */
-    @Json(name = "sentByFullName")
+    @SerialName(value = "sentByFullName")
     val sentByFullName: kotlin.String? = null,
 
-    @Json(name = "repliedTo")
+    @SerialName(value = "repliedTo")
     val repliedTo: RepliedMessageDto? = null,
 
     /* Otomasyonun bıraktığı iç not: müşteriye gitmez, yalnızca temsilci görür. */
-    @Json(name = "isInternalNote")
+    @SerialName(value = "isInternalNote")
     val isInternalNote: kotlin.Boolean? = null
 
 ) {

@@ -27,8 +27,9 @@ import com.basefywhappio.sdk.models.Gender
 import com.basefywhappio.sdk.models.IsAcceptPublications
 import com.basefywhappio.sdk.models.LanguageType
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Contextual
 
 /**
  * 
@@ -42,37 +43,37 @@ import com.squareup.moshi.JsonClass
  * @param languageType 
  * @param isAcceptPublications 
  */
-
+@Serializable
 
 data class CreateContactCommand (
 
     /* Ad soyad. Zorunlu. */
-    @Json(name = "fullName")
+    @SerialName(value = "fullName")
     val fullName: kotlin.String? = null,
 
     /* E-posta. Opsiyonel; girilirse geçerli bir adres olmalı. */
-    @Json(name = "emailAddress")
+    @SerialName(value = "emailAddress")
     val emailAddress: kotlin.String? = null,
 
     /* Telefon. Zorunlu; tenant içinde benzersiz. 905321112233, 05321112233, 5321112233 veya boşluk/tireli  yazımlar kabul edilir; ülke kodlu, yalnızca rakam biçimine (905321112233) çevrilerek kaydedilir. */
-    @Json(name = "phoneNumber")
+    @SerialName(value = "phoneNumber")
     val phoneNumber: kotlin.String? = null,
 
-    @Json(name = "gender")
+    @Contextual @SerialName(value = "gender")
     val gender: Gender? = null,
 
     /* Doğum tarihi, ISO biçiminde (ör. \"1990-01-31\"). Opsiyonel. \"31.01.1990\" biçimi kabul edilmez. */
-    @Json(name = "dateOfBirth")
+    @Contextual @SerialName(value = "dateOfBirth")
     val dateOfBirth: java.time.OffsetDateTime? = null,
 
     /* Şehir id'si (contact/cities listesinden). Opsiyonel. */
-    @Json(name = "cityId")
+    @SerialName(value = "cityId")
     val cityId: kotlin.Int? = null,
 
-    @Json(name = "languageType")
+    @Contextual @SerialName(value = "languageType")
     val languageType: LanguageType? = null,
 
-    @Json(name = "isAcceptPublications")
+    @Contextual @SerialName(value = "isAcceptPublications")
     val isAcceptPublications: IsAcceptPublications? = null
 
 ) {

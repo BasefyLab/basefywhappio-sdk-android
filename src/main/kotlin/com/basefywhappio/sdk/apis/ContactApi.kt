@@ -37,7 +37,8 @@ import com.basefywhappio.sdk.models.IsAcceptPublications
 import com.basefywhappio.sdk.models.SetContactBlockedCommand
 import com.basefywhappio.sdk.models.UpdateContactCommand
 
-import com.squareup.moshi.Json
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 import com.basefywhappio.sdk.infrastructure.ApiClient
 import com.basefywhappio.sdk.infrastructure.ApiResponse
@@ -52,6 +53,7 @@ import com.basefywhappio.sdk.infrastructure.RequestMethod
 import com.basefywhappio.sdk.infrastructure.ResponseType
 import com.basefywhappio.sdk.infrastructure.Success
 import com.basefywhappio.sdk.infrastructure.toMultiValue
+import com.basefywhappio.sdk.infrastructure.Serializer
 
 open class ContactApi(basePath: kotlin.String = defaultBasePath, client: Call.Factory = ApiClient.defaultClient) : ApiClient(basePath, client) {
     companion object {

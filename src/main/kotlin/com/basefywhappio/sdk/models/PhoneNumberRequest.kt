@@ -24,20 +24,21 @@
 package com.basefywhappio.sdk.models
 
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Contextual
 
 /**
  * Yalnızca sohbet telefonu taşıyan istek gövdesi (okundu/okunmadı).
  *
  * @param phoneNumber Müşterinin telefonu (conversation/list içindeki phoneNumber).
  */
-
+@Serializable
 
 data class PhoneNumberRequest (
 
     /* Müşterinin telefonu (conversation/list içindeki phoneNumber). */
-    @Json(name = "phoneNumber")
+    @SerialName(value = "phoneNumber")
     val phoneNumber: kotlin.String? = null
 
 ) {

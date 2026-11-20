@@ -24,8 +24,9 @@
 package com.basefywhappio.sdk.models
 
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Contextual
 
 /**
  * Temsilcinin sohbete mesaj göndermesi (metin veya konum; ExternalIdOfReplied ile yanıt). Backoffice  ChatsController.SendMessage gibi Hookman /api/webhook/send'e gider: GupShup gönderimi, Messages kaydı ve  SignalR yayını orada yapılır — mobil kendi gönderdiği mesajı da receiveMessage olayıyla görür.  Medya, hazır/liste mesajı ve NPS anketi sonraki adımda eklenecek.
@@ -36,28 +37,28 @@ import com.squareup.moshi.JsonClass
  * @param longitude Konum gönderilecekse boylam, nokta ondalıklı (ör. \"28.9784\"). Konum yoksa null; latitude ile birlikte gönderilir.
  * @param externalIdOfReplied Bir mesaja yanıt veriliyorsa o mesajın externalId'si (conversation/messages). Yanıt değilse null.
  */
-
+@Serializable
 
 data class SendConversationMessageCommand (
 
     /* Müşterinin telefonu (conversation/list içindeki phoneNumber). */
-    @Json(name = "phoneNumber")
+    @SerialName(value = "phoneNumber")
     val phoneNumber: kotlin.String? = null,
 
     /* Mesaj metni. Konum gönderilmiyorsa zorunlu. Konum gönderiliyorsa yok sayılır (konum mesajı metin taşımaz). */
-    @Json(name = "text")
+    @SerialName(value = "text")
     val text: kotlin.String? = null,
 
     /* Konum gönderilecekse enlem, nokta ondalıklı (ör. \"41.0082\"). Konum yoksa null; longitude ile birlikte gönderilir. */
-    @Json(name = "latitude")
+    @SerialName(value = "latitude")
     val latitude: kotlin.String? = null,
 
     /* Konum gönderilecekse boylam, nokta ondalıklı (ör. \"28.9784\"). Konum yoksa null; latitude ile birlikte gönderilir. */
-    @Json(name = "longitude")
+    @SerialName(value = "longitude")
     val longitude: kotlin.String? = null,
 
     /* Bir mesaja yanıt veriliyorsa o mesajın externalId'si (conversation/messages). Yanıt değilse null. */
-    @Json(name = "externalIdOfReplied")
+    @SerialName(value = "externalIdOfReplied")
     val externalIdOfReplied: kotlin.String? = null
 
 ) {

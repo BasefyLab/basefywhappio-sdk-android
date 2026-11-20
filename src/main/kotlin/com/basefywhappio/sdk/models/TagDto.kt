@@ -24,8 +24,9 @@
 package com.basefywhappio.sdk.models
 
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Contextual
 
 /**
  * Mobil API etiket listesi / oluşturma / güncelleme yanıtı.
@@ -34,20 +35,20 @@ import com.squareup.moshi.JsonClass
  * @param title Etiket adı (tenant içinde benzersiz).
  * @param description Açıklama; girilmemişse boş metin.
  */
-
+@Serializable
 
 data class TagDto (
 
     /* Etiket id'si. */
-    @Json(name = "id")
+    @SerialName(value = "id")
     val id: kotlin.Int? = null,
 
     /* Etiket adı (tenant içinde benzersiz). */
-    @Json(name = "title")
+    @SerialName(value = "title")
     val title: kotlin.String? = null,
 
     /* Açıklama; girilmemişse boş metin. */
-    @Json(name = "description")
+    @SerialName(value = "description")
     val description: kotlin.String? = null
 
 ) {

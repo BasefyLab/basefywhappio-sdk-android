@@ -24,8 +24,9 @@
 package com.basefywhappio.sdk.models
 
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Contextual
 
 /**
  * Kişiyi WhatsApp'ta engeller / engelini kaldırır. Engel GupShup tarafında uygulanır; DB yalnızca GupShup  başarılı dönerse güncellenir ki ekranda \"engelli\" görünüp mesaj almaya devam eden kişi olmasın.  Backoffice Block toggle'dı; istenen durum açıkça gönderilir ki tekrar deneme engeli geri açmasın.
@@ -33,16 +34,16 @@ import com.squareup.moshi.JsonClass
  * @param id Kişi id'si.
  * @param isBlocked true: engelle. false: engeli kaldır. (Değiştirme değil, istenen durum gönderilir.)
  */
-
+@Serializable
 
 data class SetContactBlockedCommand (
 
     /* Kişi id'si. */
-    @Json(name = "id")
+    @SerialName(value = "id")
     val id: kotlin.Int? = null,
 
     /* true: engelle. false: engeli kaldır. (Değiştirme değil, istenen durum gönderilir.) */
-    @Json(name = "isBlocked")
+    @SerialName(value = "isBlocked")
     val isBlocked: kotlin.Boolean? = null
 
 ) {

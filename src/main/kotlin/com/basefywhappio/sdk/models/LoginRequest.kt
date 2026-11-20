@@ -24,8 +24,9 @@
 package com.basefywhappio.sdk.models
 
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Contextual
 
 /**
  * POST auth/login gövdesi.
@@ -33,16 +34,16 @@ import com.squareup.moshi.JsonClass
  * @param username Backoffice'e giriş yapılan kullanıcı adı.
  * @param password Parola.
  */
-
+@Serializable
 
 data class LoginRequest (
 
     /* Backoffice'e giriş yapılan kullanıcı adı. */
-    @Json(name = "username")
+    @SerialName(value = "username")
     val username: kotlin.String? = null,
 
     /* Parola. */
-    @Json(name = "password")
+    @SerialName(value = "password")
     val password: kotlin.String? = null
 
 ) {

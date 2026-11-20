@@ -24,8 +24,9 @@
 package com.basefywhappio.sdk.models
 
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Contextual
 
 /**
  * 
@@ -33,16 +34,16 @@ import com.squareup.moshi.JsonClass
  * @param contactId Etiketin kaldırılacağı kişinin id'si.
  * @param tagId Kaldırılacak etiketin id'si.
  */
-
+@Serializable
 
 data class RemoveContactTagCommand (
 
     /* Etiketin kaldırılacağı kişinin id'si. */
-    @Json(name = "contactId")
+    @SerialName(value = "contactId")
     val contactId: kotlin.Int? = null,
 
     /* Kaldırılacak etiketin id'si. */
-    @Json(name = "tagId")
+    @SerialName(value = "tagId")
     val tagId: kotlin.Int? = null
 
 ) {

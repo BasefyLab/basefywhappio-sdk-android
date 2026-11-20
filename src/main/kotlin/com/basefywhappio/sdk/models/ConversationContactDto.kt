@@ -24,8 +24,9 @@
 package com.basefywhappio.sdk.models
 
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Contextual
 
 /**
  * Sohbet listesinde gösterilen kişi bilgisi.
@@ -34,20 +35,20 @@ import com.squareup.moshi.JsonClass
  * @param fullName Ad soyad.
  * @param phoneNumber Kişinin kayıtlı telefonu.
  */
-
+@Serializable
 
 data class ConversationContactDto (
 
     /* Kişi id'si (contact/detail, tag/contacttags için). */
-    @Json(name = "id")
+    @SerialName(value = "id")
     val id: kotlin.Int? = null,
 
     /* Ad soyad. */
-    @Json(name = "fullName")
+    @SerialName(value = "fullName")
     val fullName: kotlin.String? = null,
 
     /* Kişinin kayıtlı telefonu. */
-    @Json(name = "phoneNumber")
+    @SerialName(value = "phoneNumber")
     val phoneNumber: kotlin.String? = null
 
 ) {

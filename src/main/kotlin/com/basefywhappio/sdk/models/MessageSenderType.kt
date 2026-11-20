@@ -24,37 +24,38 @@
 package com.basefywhappio.sdk.models
 
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.Serializer
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.builtins.serializer
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
+
 
 /**
  * 
  *
  * Values: _0,_1,_2,_3,_4,_5,_6
  */
-
-@JsonClass(generateAdapter = false)
+@Serializable(with = MessageSenderTypeSerializer::class)
 enum class MessageSenderType(val value: kotlin.Int) {
 
-    @Json(name = "0")
     _0(0),
 
-    @Json(name = "1")
     _1(1),
 
-    @Json(name = "2")
     _2(2),
 
-    @Json(name = "3")
     _3(3),
 
-    @Json(name = "4")
     _4(4),
 
-    @Json(name = "5")
     _5(5),
 
-    @Json(name = "6")
     _6(6);
 
     /**
@@ -83,4 +84,19 @@ enum class MessageSenderType(val value: kotlin.Int) {
         }
     }
 }
+
+internal object MessageSenderTypeSerializer : KSerializer<MessageSenderType> {
+    override val descriptor = kotlin.Int.serializer().descriptor
+
+    override fun deserialize(decoder: Decoder): MessageSenderType {
+        val value = decoder.decodeSerializableValue(kotlin.Int.serializer())
+        return MessageSenderType.entries.firstOrNull { it.value == value }
+            ?: throw IllegalArgumentException("Unknown enum value: $value")
+    }
+
+    override fun serialize(encoder: Encoder, value: MessageSenderType) {
+        encoder.encodeSerializableValue(kotlin.Int.serializer(), value.value)
+    }
+}
+
 

@@ -25,8 +25,9 @@ package com.basefywhappio.sdk.models
 
 import com.basefywhappio.sdk.models.TagDto
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Contextual
 
 /**
  * Mobil API liste yanıtı (Cowin.Application.Paged ile aynı alanlar) — mobil uygulama iki projede  aynı sayfalama sözleşmesini görsün.
@@ -37,28 +38,28 @@ import com.squareup.moshi.JsonClass
  * @param rowCount Filtreye uyan toplam kayıt sayısı.
  * @param results Bu sayfadaki kayıtlar.
  */
-
+@Serializable
 
 data class TagDtoPaged (
 
     /* Dönen sayfanın numarası (1'den başlar). */
-    @Json(name = "currentPage")
+    @SerialName(value = "currentPage")
     val currentPage: kotlin.Int? = null,
 
     /* Toplam sayfa sayısı. CurrentPage bu değere ulaştığında son sayfadasınız. */
-    @Json(name = "pageCount")
+    @SerialName(value = "pageCount")
     val pageCount: kotlin.Int? = null,
 
     /* Uygulanan sayfa boyutu (istenen değer sınırlara çekilmiş olabilir). */
-    @Json(name = "pageSize")
+    @SerialName(value = "pageSize")
     val pageSize: kotlin.Int? = null,
 
     /* Filtreye uyan toplam kayıt sayısı. */
-    @Json(name = "rowCount")
+    @SerialName(value = "rowCount")
     val rowCount: kotlin.Int? = null,
 
     /* Bu sayfadaki kayıtlar. */
-    @Json(name = "results")
+    @SerialName(value = "results")
     val results: kotlin.collections.List<TagDto>? = null
 
 ) {

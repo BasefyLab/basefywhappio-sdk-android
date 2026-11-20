@@ -24,8 +24,9 @@
 package com.basefywhappio.sdk.models
 
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Contextual
 
 /**
  * Sohbeti bir temsilciye atar (Hookman Assign: ticket açar/günceller, geçmişe yazar, SignalR \"assign\" yayınlar).  Backoffice herhangi bir userId'yi kabul ediyordu; burada hedefin aynı tenant'ın aktif temsilcisi olduğu kontrol edilir.
@@ -33,16 +34,16 @@ import com.squareup.moshi.JsonClass
  * @param phoneNumber Müşterinin telefonu (conversation/list içindeki phoneNumber).
  * @param userId Atanacak temsilcinin id'si (conversation/assignableusers listesinden).
  */
-
+@Serializable
 
 data class AssignConversationCommand (
 
     /* Müşterinin telefonu (conversation/list içindeki phoneNumber). */
-    @Json(name = "phoneNumber")
+    @SerialName(value = "phoneNumber")
     val phoneNumber: kotlin.String? = null,
 
     /* Atanacak temsilcinin id'si (conversation/assignableusers listesinden). */
-    @Json(name = "userId")
+    @SerialName(value = "userId")
     val userId: kotlin.Int? = null
 
 ) {

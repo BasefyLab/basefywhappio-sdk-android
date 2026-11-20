@@ -24,20 +24,21 @@
 package com.basefywhappio.sdk.models
 
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Contextual
 
 /**
  * Müşteriye geri bildirim (NPS puanlama) liste mesajı gönderir — Backoffice'te SendMessage'a ListMessageId = -1  ile giden \"Geri bildirim mesajı gönder\" akışı. Hookman mesajı gönderir ve ticket'a Feedback kaydı bağlar;  müşterinin puanını da Hookman işler. Gönderim sonrası ticket \"Kapanış bekliyor\" olur (otomatik kapatma  açıksa Backoffice SyncApplicationsTask kapatır).
  *
  * @param phoneNumber Müşterinin telefonu (conversation/list içindeki phoneNumber).
  */
-
+@Serializable
 
 data class SendFeedbackMessageCommand (
 
     /* Müşterinin telefonu (conversation/list içindeki phoneNumber). */
-    @Json(name = "phoneNumber")
+    @SerialName(value = "phoneNumber")
     val phoneNumber: kotlin.String? = null
 
 ) {

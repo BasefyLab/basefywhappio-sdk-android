@@ -24,22 +24,28 @@
 package com.basefywhappio.sdk.models
 
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.Serializer
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.builtins.serializer
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
+
 
 /**
  * 
  *
  * Values: _1,_2
  */
-
-@JsonClass(generateAdapter = false)
+@Serializable(with = GenderSerializer::class)
 enum class Gender(val value: kotlin.Int) {
 
-    @Json(name = "1")
     _1(1),
 
-    @Json(name = "2")
     _2(2);
 
     /**
@@ -68,4 +74,19 @@ enum class Gender(val value: kotlin.Int) {
         }
     }
 }
+
+internal object GenderSerializer : KSerializer<Gender> {
+    override val descriptor = kotlin.Int.serializer().descriptor
+
+    override fun deserialize(decoder: Decoder): Gender {
+        val value = decoder.decodeSerializableValue(kotlin.Int.serializer())
+        return Gender.entries.firstOrNull { it.value == value }
+            ?: throw IllegalArgumentException("Unknown enum value: $value")
+    }
+
+    override fun serialize(encoder: Encoder, value: Gender) {
+        encoder.encodeSerializableValue(kotlin.Int.serializer(), value.value)
+    }
+}
+
 

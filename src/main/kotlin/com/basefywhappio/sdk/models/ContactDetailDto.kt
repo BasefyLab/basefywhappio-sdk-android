@@ -27,8 +27,9 @@ import com.basefywhappio.sdk.models.Gender
 import com.basefywhappio.sdk.models.IsAcceptPublications
 import com.basefywhappio.sdk.models.LanguageType
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Contextual
 
 /**
  * Kişi detayı; düzenleme formu da bu verilerle dolar.
@@ -45,49 +46,49 @@ import com.squareup.moshi.JsonClass
  * @param isAcceptPublications 
  * @param isBlocked Kişi WhatsApp'ta engelli mi. Değiştirmek için contact/block kullanılır.
  */
-
+@Serializable
 
 data class ContactDetailDto (
 
     /* Kişi id'si. */
-    @Json(name = "id")
+    @SerialName(value = "id")
     val id: kotlin.Int? = null,
 
     /* Ad soyad. */
-    @Json(name = "fullName")
+    @SerialName(value = "fullName")
     val fullName: kotlin.String? = null,
 
     /* E-posta; girilmemişse null. */
-    @Json(name = "emailAddress")
+    @SerialName(value = "emailAddress")
     val emailAddress: kotlin.String? = null,
 
     /* Ülke kodlu telefon, yalnızca rakam (ör. 905321112233). */
-    @Json(name = "phoneNumber")
+    @SerialName(value = "phoneNumber")
     val phoneNumber: kotlin.String? = null,
 
-    @Json(name = "gender")
+    @Contextual @SerialName(value = "gender")
     val gender: Gender? = null,
 
     /* Doğum tarihi (ISO 8601, ör. 1990-01-31T00:00:00); girilmemişse null. */
-    @Json(name = "dateOfBirth")
+    @Contextual @SerialName(value = "dateOfBirth")
     val dateOfBirth: java.time.OffsetDateTime? = null,
 
     /* Şehir id'si (contact/cities listesinden); girilmemişse null. */
-    @Json(name = "cityId")
+    @SerialName(value = "cityId")
     val cityId: kotlin.Int? = null,
 
     /* Şehir adı (gösterim için); şehir yoksa null. */
-    @Json(name = "cityName")
+    @SerialName(value = "cityName")
     val cityName: kotlin.String? = null,
 
-    @Json(name = "languageType")
+    @Contextual @SerialName(value = "languageType")
     val languageType: LanguageType? = null,
 
-    @Json(name = "isAcceptPublications")
+    @Contextual @SerialName(value = "isAcceptPublications")
     val isAcceptPublications: IsAcceptPublications? = null,
 
     /* Kişi WhatsApp'ta engelli mi. Değiştirmek için contact/block kullanılır. */
-    @Json(name = "isBlocked")
+    @SerialName(value = "isBlocked")
     val isBlocked: kotlin.Boolean? = null
 
 ) {

@@ -24,8 +24,9 @@
 package com.basefywhappio.sdk.models
 
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Contextual
 
 /**
  * Bir kişinin etiket ekranı: tenant'ın tüm etiketleri, kişiye atanmış olanlar işaretli  (Backoffice sohbet sağ panelindeki etiket listesiyle aynı mantık).
@@ -35,24 +36,24 @@ import com.squareup.moshi.JsonClass
  * @param description Açıklama; girilmemişse boş metin.
  * @param isAssigned true: etiket bu kişiye ekli. false: ekli değil (seçilebilir etiket).
  */
-
+@Serializable
 
 data class ContactTagDto (
 
     /* Etiket id'si. */
-    @Json(name = "id")
+    @SerialName(value = "id")
     val id: kotlin.Int? = null,
 
     /* Etiket adı. */
-    @Json(name = "title")
+    @SerialName(value = "title")
     val title: kotlin.String? = null,
 
     /* Açıklama; girilmemişse boş metin. */
-    @Json(name = "description")
+    @SerialName(value = "description")
     val description: kotlin.String? = null,
 
     /* true: etiket bu kişiye ekli. false: ekli değil (seçilebilir etiket). */
-    @Json(name = "isAssigned")
+    @SerialName(value = "isAssigned")
     val isAssigned: kotlin.Boolean? = null
 
 ) {

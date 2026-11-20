@@ -23,3 +23,4 @@
 #!docs/README.md
 .github/workflows/test.yml
 SmokeTest/**
+README.md

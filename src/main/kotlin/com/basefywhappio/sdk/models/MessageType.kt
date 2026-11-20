@@ -24,73 +24,62 @@
 package com.basefywhappio.sdk.models
 
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.Serializer
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.builtins.serializer
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
+
 
 /**
  * 
  *
  * Values: _0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18
  */
-
-@JsonClass(generateAdapter = false)
+@Serializable(with = MessageTypeSerializer::class)
 enum class MessageType(val value: kotlin.Int) {
 
-    @Json(name = "0")
     _0(0),
 
-    @Json(name = "1")
     _1(1),
 
-    @Json(name = "2")
     _2(2),
 
-    @Json(name = "3")
     _3(3),
 
-    @Json(name = "4")
     _4(4),
 
-    @Json(name = "5")
     _5(5),
 
-    @Json(name = "6")
     _6(6),
 
-    @Json(name = "7")
     _7(7),
 
-    @Json(name = "8")
     _8(8),
 
-    @Json(name = "9")
     _9(9),
 
-    @Json(name = "10")
     _10(10),
 
-    @Json(name = "11")
     _11(11),
 
-    @Json(name = "12")
     _12(12),
 
-    @Json(name = "13")
     _13(13),
 
-    @Json(name = "14")
     _14(14),
 
-    @Json(name = "15")
     _15(15),
 
-    @Json(name = "16")
     _16(16),
 
-    @Json(name = "17")
     _17(17),
 
-    @Json(name = "18")
     _18(18);
 
     /**
@@ -119,4 +108,19 @@ enum class MessageType(val value: kotlin.Int) {
         }
     }
 }
+
+internal object MessageTypeSerializer : KSerializer<MessageType> {
+    override val descriptor = kotlin.Int.serializer().descriptor
+
+    override fun deserialize(decoder: Decoder): MessageType {
+        val value = decoder.decodeSerializableValue(kotlin.Int.serializer())
+        return MessageType.entries.firstOrNull { it.value == value }
+            ?: throw IllegalArgumentException("Unknown enum value: $value")
+    }
+
+    override fun serialize(encoder: Encoder, value: MessageType) {
+        encoder.encodeSerializableValue(kotlin.Int.serializer(), value.value)
+    }
+}
+
 

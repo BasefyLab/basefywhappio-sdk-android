@@ -25,8 +25,9 @@ package com.basefywhappio.sdk.models
 
 import com.basefywhappio.sdk.models.ConversationMessageDto
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Contextual
 
 /**
  * Mesaj geçmişinin bir sayfası. Mesajlar eskiden yeniye sıralıdır. Daha eski mesajlar için bir sonraki istekte  BasefyWP.Application.Conversations.Models.ConversationMessagesDto.NextBeforeDate / BasefyWP.Application.Conversations.Models.ConversationMessagesDto.NextBeforeId gönderilir (imleçli sayfalama: sohbete yeni mesaj  düşse bile sayfa sınırı kaymaz, mesaj tekrarlanmaz/atlanmaz).
@@ -36,24 +37,24 @@ import com.squareup.moshi.JsonClass
  * @param nextBeforeDate Daha eski sayfa için bir sonraki istekte beforeDate olarak gönderilir; HasMore=false ise null.
  * @param nextBeforeId Daha eski sayfa için bir sonraki istekte beforeId olarak gönderilir; HasMore=false ise null.
  */
-
+@Serializable
 
 data class ConversationMessagesDto (
 
     /* Bu sayfadaki mesajlar, eskiden yeniye sıralı. */
-    @Json(name = "messages")
+    @SerialName(value = "messages")
     val messages: kotlin.collections.List<ConversationMessageDto>? = null,
 
     /* Daha eski mesaj var mı. false ise sohbetin başına gelindi. */
-    @Json(name = "hasMore")
+    @SerialName(value = "hasMore")
     val hasMore: kotlin.Boolean? = null,
 
     /* Daha eski sayfa için bir sonraki istekte beforeDate olarak gönderilir; HasMore=false ise null. */
-    @Json(name = "nextBeforeDate")
+    @SerialName(value = "nextBeforeDate")
     val nextBeforeDate: kotlin.Long? = null,
 
     /* Daha eski sayfa için bir sonraki istekte beforeId olarak gönderilir; HasMore=false ise null. */
-    @Json(name = "nextBeforeId")
+    @SerialName(value = "nextBeforeId")
     val nextBeforeId: kotlin.Int? = null
 
 ) {

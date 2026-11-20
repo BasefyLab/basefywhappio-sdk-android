@@ -24,20 +24,21 @@
 package com.basefywhappio.sdk.models
 
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Contextual
 
 /**
  * Etiketi siler (soft delete) ve kişi bağlantılarını kaldırır — Backoffice TagsController.Delete ile aynı.  Bağlantılar kalsaydı silinmiş etiket kişi filtrelerinde ve otomasyon koşullarında görünmeye devam ederdi.
  *
  * @param id Silinecek etiketin id'si.
  */
-
+@Serializable
 
 data class DeleteTagCommand (
 
     /* Silinecek etiketin id'si. */
-    @Json(name = "id")
+    @SerialName(value = "id")
     val id: kotlin.Int? = null
 
 ) {

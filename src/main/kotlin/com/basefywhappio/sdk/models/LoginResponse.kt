@@ -25,8 +25,9 @@ package com.basefywhappio.sdk.models
 
 import com.basefywhappio.sdk.models.UserType
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Contextual
 
 /**
  * Login yanıtı (Cowin.Api LoginResponse karşılığı). Mobil uygulama Token'ı güvenli depoda saklayıp  her istekte \"Authorization: Bearer {token}\" olarak gönderir. Permissions yalnızca menü/buton  görünürlüğü içindir; asıl yetki kontrolü her istekte sunucuda yapılır.
@@ -40,39 +41,39 @@ import com.squareup.moshi.JsonClass
  * @param userType 
  * @param permissions Kullanıcının yetki anahtarları (ör. contactspermission, taglistpermission). Yalnızca menü/buton göstermek  içindir; yönetici (userType=1) bu listeden bağımsız olarak her uca erişir.
  */
-
+@Serializable
 
 data class LoginResponse (
 
     /* Kullanıcı id'si. */
-    @Json(name = "id")
+    @SerialName(value = "id")
     val id: kotlin.Int? = null,
 
     /* JWT. Diğer isteklerde \"Authorization: Bearer {token}\" başlığıyla gönderilir. */
-    @Json(name = "token")
+    @SerialName(value = "token")
     val token: kotlin.String? = null,
 
     /* Kullanıcı adı. */
-    @Json(name = "username")
+    @SerialName(value = "username")
     val username: kotlin.String? = null,
 
     /* Ad soyad. */
-    @Json(name = "fullName")
+    @SerialName(value = "fullName")
     val fullName: kotlin.String? = null,
 
     /* E-posta. */
-    @Json(name = "emailAddress")
+    @SerialName(value = "emailAddress")
     val emailAddress: kotlin.String? = null,
 
     /* Kullanıcının bağlı olduğu işletme (tenant) id'si. */
-    @Json(name = "tenantId")
+    @SerialName(value = "tenantId")
     val tenantId: kotlin.Int? = null,
 
-    @Json(name = "userType")
+    @Contextual @SerialName(value = "userType")
     val userType: UserType? = null,
 
     /* Kullanıcının yetki anahtarları (ör. contactspermission, taglistpermission). Yalnızca menü/buton göstermek  içindir; yönetici (userType=1) bu listeden bağımsız olarak her uca erişir. */
-    @Json(name = "permissions")
+    @SerialName(value = "permissions")
     val permissions: kotlin.collections.List<kotlin.String>? = null
 
 ) {

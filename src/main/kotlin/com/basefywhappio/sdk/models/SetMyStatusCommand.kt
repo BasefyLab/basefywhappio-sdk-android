@@ -24,20 +24,21 @@
 package com.basefywhappio.sdk.models
 
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Contextual
 
 /**
  * Temsilciyi çevrimiçi/çevrimdışı yapar (Backoffice MeController.ChangeStatus karşılığı). Backoffice tersine  çeviriyordu; istenen durum açıkça gönderilir ki çift dokunma/yeniden deneme durumu geri çevirmesin.  Çevrimdışı olurken üzerindeki açık sohbetler havuza bırakılır: çevrimdışı temsilcide kalan sohbet cevapsız kalır.
  *
  * @param isOnline true: çevrimiçi ol (sohbet atanabilir). false: çevrimdışı ol (üzerindeki açık sohbetler havuza bırakılır).
  */
-
+@Serializable
 
 data class SetMyStatusCommand (
 
     /* true: çevrimiçi ol (sohbet atanabilir). false: çevrimdışı ol (üzerindeki açık sohbetler havuza bırakılır). */
-    @Json(name = "isOnline")
+    @SerialName(value = "isOnline")
     val isOnline: kotlin.Boolean? = null
 
 ) {

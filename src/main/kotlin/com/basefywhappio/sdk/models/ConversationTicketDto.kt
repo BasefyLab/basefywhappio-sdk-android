@@ -25,8 +25,9 @@ package com.basefywhappio.sdk.models
 
 import com.basefywhappio.sdk.models.TicketStatus
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Contextual
 
 /**
  * Sohbetin en son ticket'ı (kapalı olabilir).
@@ -36,23 +37,23 @@ import com.squareup.moshi.JsonClass
  * @param assignedUserId Atanan temsilcinin id'si; atanmamışsa null.
  * @param assignedUserFullName Atanan temsilcinin adı; atanmamışsa null.
  */
-
+@Serializable
 
 data class ConversationTicketDto (
 
     /* Ticket id'si. */
-    @Json(name = "id")
+    @SerialName(value = "id")
     val id: kotlin.Int? = null,
 
-    @Json(name = "status")
+    @Contextual @SerialName(value = "status")
     val status: TicketStatus? = null,
 
     /* Atanan temsilcinin id'si; atanmamışsa null. */
-    @Json(name = "assignedUserId")
+    @SerialName(value = "assignedUserId")
     val assignedUserId: kotlin.Int? = null,
 
     /* Atanan temsilcinin adı; atanmamışsa null. */
-    @Json(name = "assignedUserFullName")
+    @SerialName(value = "assignedUserFullName")
     val assignedUserFullName: kotlin.String? = null
 
 ) {

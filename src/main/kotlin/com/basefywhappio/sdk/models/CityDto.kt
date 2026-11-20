@@ -24,8 +24,9 @@
 package com.basefywhappio.sdk.models
 
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Contextual
 
 /**
  * Kişi formundaki şehir seçimi.
@@ -33,16 +34,16 @@ import com.squareup.moshi.JsonClass
  * @param id Şehir id'si; kişi formunda cityId olarak gönderilir.
  * @param name Şehir adı.
  */
-
+@Serializable
 
 data class CityDto (
 
     /* Şehir id'si; kişi formunda cityId olarak gönderilir. */
-    @Json(name = "id")
+    @SerialName(value = "id")
     val id: kotlin.Int? = null,
 
     /* Şehir adı. */
-    @Json(name = "name")
+    @SerialName(value = "name")
     val name: kotlin.String? = null
 
 ) {

@@ -24,8 +24,9 @@
 package com.basefywhappio.sdk.models
 
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Contextual
 
 /**
  * Sohbette AI chatbot'u açar/kapatır. Backoffice ToggleChatBot tersine çeviriyordu; istenen durum açıkça  gönderilir ki tekrar deneme durumu geri çevirmesin.
@@ -33,16 +34,16 @@ import com.squareup.moshi.JsonClass
  * @param phoneNumber Müşterinin telefonu (conversation/list içindeki phoneNumber).
  * @param isActive true: AI chatbot bu müşteriye cevap verir. false: AI susar, sohbet temsilcide kalır.
  */
-
+@Serializable
 
 data class SetChatBotCommand (
 
     /* Müşterinin telefonu (conversation/list içindeki phoneNumber). */
-    @Json(name = "phoneNumber")
+    @SerialName(value = "phoneNumber")
     val phoneNumber: kotlin.String? = null,
 
     /* true: AI chatbot bu müşteriye cevap verir. false: AI susar, sohbet temsilcide kalır. */
-    @Json(name = "isActive")
+    @SerialName(value = "isActive")
     val isActive: kotlin.Boolean? = null
 
 ) {

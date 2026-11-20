@@ -24,8 +24,9 @@
 package com.basefywhappio.sdk.models
 
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Contextual
 
 /**
  * 
@@ -33,16 +34,16 @@ import com.squareup.moshi.JsonClass
  * @param title Etiket adı. Zorunlu; tenant içinde benzersiz olmalı.
  * @param description Açıklama. Opsiyonel (null veya boş bırakılabilir).
  */
-
+@Serializable
 
 data class CreateTagCommand (
 
     /* Etiket adı. Zorunlu; tenant içinde benzersiz olmalı. */
-    @Json(name = "title")
+    @SerialName(value = "title")
     val title: kotlin.String? = null,
 
     /* Açıklama. Opsiyonel (null veya boş bırakılabilir). */
-    @Json(name = "description")
+    @SerialName(value = "description")
     val description: kotlin.String? = null
 
 ) {

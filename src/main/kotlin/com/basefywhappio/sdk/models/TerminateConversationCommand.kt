@@ -24,20 +24,21 @@
 package com.basefywhappio.sdk.models
 
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Contextual
 
 /**
  * Görüşmeyi sonlandırır (Backoffice TerminateChat): varsa kapanış hazır mesajını gönderir, son ticket'ı kapatır,  \"Temsilciye Devredildi\" etiketini kaldırır ve diğer istemcilere ticket durumu/atama değişikliğini bildirir.
  *
  * @param phoneNumber Müşterinin telefonu (conversation/list içindeki phoneNumber).
  */
-
+@Serializable
 
 data class TerminateConversationCommand (
 
     /* Müşterinin telefonu (conversation/list içindeki phoneNumber). */
-    @Json(name = "phoneNumber")
+    @SerialName(value = "phoneNumber")
     val phoneNumber: kotlin.String? = null
 
 ) {

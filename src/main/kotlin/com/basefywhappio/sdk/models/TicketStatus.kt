@@ -24,31 +24,34 @@
 package com.basefywhappio.sdk.models
 
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.Serializer
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.builtins.serializer
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
+
 
 /**
  * 
  *
  * Values: _1,_2,_3,_4,_5
  */
-
-@JsonClass(generateAdapter = false)
+@Serializable(with = TicketStatusSerializer::class)
 enum class TicketStatus(val value: kotlin.Int) {
 
-    @Json(name = "1")
     _1(1),
 
-    @Json(name = "2")
     _2(2),
 
-    @Json(name = "3")
     _3(3),
 
-    @Json(name = "4")
     _4(4),
 
-    @Json(name = "5")
     _5(5);
 
     /**
@@ -77,4 +80,19 @@ enum class TicketStatus(val value: kotlin.Int) {
         }
     }
 }
+
+internal object TicketStatusSerializer : KSerializer<TicketStatus> {
+    override val descriptor = kotlin.Int.serializer().descriptor
+
+    override fun deserialize(decoder: Decoder): TicketStatus {
+        val value = decoder.decodeSerializableValue(kotlin.Int.serializer())
+        return TicketStatus.entries.firstOrNull { it.value == value }
+            ?: throw IllegalArgumentException("Unknown enum value: $value")
+    }
+
+    override fun serialize(encoder: Encoder, value: TicketStatus) {
+        encoder.encodeSerializableValue(kotlin.Int.serializer(), value.value)
+    }
+}
+
 

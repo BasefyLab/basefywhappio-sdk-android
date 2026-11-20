@@ -26,8 +26,9 @@ package com.basefywhappio.sdk.models
 import com.basefywhappio.sdk.models.MessageSenderType
 import com.basefywhappio.sdk.models.MessageType
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Contextual
 
 /**
  * Yanıtlanan (alıntılanan) mesajın özeti.
@@ -37,22 +38,22 @@ import com.squareup.moshi.JsonClass
  * @param text Yanıtlanan mesajın metni.
  * @param mediaUrl Yanıtlanan mesaj medyaysa adresi.
  */
-
+@Serializable
 
 data class RepliedMessageDto (
 
-    @Json(name = "messageType")
+    @Contextual @SerialName(value = "messageType")
     val messageType: MessageType? = null,
 
-    @Json(name = "senderType")
+    @Contextual @SerialName(value = "senderType")
     val senderType: MessageSenderType? = null,
 
     /* Yanıtlanan mesajın metni. */
-    @Json(name = "text")
+    @SerialName(value = "text")
     val text: kotlin.String? = null,
 
     /* Yanıtlanan mesaj medyaysa adresi. */
-    @Json(name = "mediaUrl")
+    @SerialName(value = "mediaUrl")
     val mediaUrl: kotlin.String? = null
 
 ) {

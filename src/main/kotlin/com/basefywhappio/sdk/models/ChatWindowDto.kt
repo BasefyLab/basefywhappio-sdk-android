@@ -24,8 +24,9 @@
 package com.basefywhappio.sdk.models
 
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Contextual
 
 /**
  * WhatsApp 24 saatlik serbest mesaj penceresi. Kapalıyken yalnızca onaylı şablon gönderilebilir.
@@ -34,20 +35,20 @@ import com.squareup.moshi.JsonClass
  * @param lastIncomingMessageDate Müşteriden gelen son mesajın tarihi (unix ms); hiç mesaj yoksa null.
  * @param remainingSeconds Pencerenin kapanmasına kalan saniye; kapalıysa 0.
  */
-
+@Serializable
 
 data class ChatWindowDto (
 
     /* true: serbest mesaj gönderilebilir. false: müşteri 24 saattir yazmadı, mesaj kutusu kapatılmalı. */
-    @Json(name = "isOpen")
+    @SerialName(value = "isOpen")
     val isOpen: kotlin.Boolean? = null,
 
     /* Müşteriden gelen son mesajın tarihi (unix ms); hiç mesaj yoksa null. */
-    @Json(name = "lastIncomingMessageDate")
+    @SerialName(value = "lastIncomingMessageDate")
     val lastIncomingMessageDate: kotlin.Long? = null,
 
     /* Pencerenin kapanmasına kalan saniye; kapalıysa 0. */
-    @Json(name = "remainingSeconds")
+    @SerialName(value = "remainingSeconds")
     val remainingSeconds: kotlin.Long? = null
 
 ) {

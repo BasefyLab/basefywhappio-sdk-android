@@ -25,8 +25,9 @@ package com.basefywhappio.sdk.models
 
 import com.basefywhappio.sdk.models.MessageType
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Contextual
 
 /**
  * Sohbet listesindeki son mesaj özeti.
@@ -36,23 +37,23 @@ import com.squareup.moshi.JsonClass
  * @param date Unix milisaniye (Messages.Date ve SignalR receiveMessage ile aynı birim).
  * @param isIncoming Son mesaj müşteriden mi geldi.
  */
-
+@Serializable
 
 data class ConversationLastMessageDto (
 
     /* Listede gösterilecek kısa metin (medya mesajlarında \"Fotoğraf\", \"Konum\" gibi bir etiket). */
-    @Json(name = "preview")
+    @SerialName(value = "preview")
     val preview: kotlin.String? = null,
 
-    @Json(name = "messageType")
+    @Contextual @SerialName(value = "messageType")
     val messageType: MessageType? = null,
 
     /* Unix milisaniye (Messages.Date ve SignalR receiveMessage ile aynı birim). */
-    @Json(name = "date")
+    @SerialName(value = "date")
     val date: kotlin.Long? = null,
 
     /* Son mesaj müşteriden mi geldi. */
-    @Json(name = "isIncoming")
+    @SerialName(value = "isIncoming")
     val isIncoming: kotlin.Boolean? = null
 
 ) {

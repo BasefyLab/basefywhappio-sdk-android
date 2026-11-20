@@ -25,8 +25,9 @@ package com.basefywhappio.sdk.models
 
 import com.basefywhappio.sdk.models.IsAcceptPublications
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Contextual
 
 /**
  * Mobil API kişi listesi satırı (Backoffice ContactsController.GetList ile aynı alanlar).
@@ -38,31 +39,31 @@ import com.squareup.moshi.JsonClass
  * @param isBlocked Kişi WhatsApp'ta engelli mi.
  * @param isAcceptPublications 
  */
-
+@Serializable
 
 data class ContactListItemDto (
 
     /* Kişi id'si. */
-    @Json(name = "id")
+    @SerialName(value = "id")
     val id: kotlin.Int? = null,
 
     /* Ad soyad. */
-    @Json(name = "fullName")
+    @SerialName(value = "fullName")
     val fullName: kotlin.String? = null,
 
     /* E-posta; girilmemişse null. */
-    @Json(name = "emailAddress")
+    @SerialName(value = "emailAddress")
     val emailAddress: kotlin.String? = null,
 
     /* Ülke kodlu telefon, yalnızca rakam (ör. 905321112233). Sohbetler bu numarayla eşleşir. */
-    @Json(name = "phoneNumber")
+    @SerialName(value = "phoneNumber")
     val phoneNumber: kotlin.String? = null,
 
     /* Kişi WhatsApp'ta engelli mi. */
-    @Json(name = "isBlocked")
+    @SerialName(value = "isBlocked")
     val isBlocked: kotlin.Boolean? = null,
 
-    @Json(name = "isAcceptPublications")
+    @Contextual @SerialName(value = "isAcceptPublications")
     val isAcceptPublications: IsAcceptPublications? = null
 
 ) {

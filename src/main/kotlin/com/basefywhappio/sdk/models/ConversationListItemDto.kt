@@ -27,8 +27,9 @@ import com.basefywhappio.sdk.models.ConversationContactDto
 import com.basefywhappio.sdk.models.ConversationLastMessageDto
 import com.basefywhappio.sdk.models.ConversationTicketDto
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Contextual
 
 /**
  * Sohbet listesi satırı. Sohbetin kimliği müşterinin telefonudur (BasefyWP.Application.Conversations.Models.ConversationListItemDto.PhoneNumber); contact kaydı  olmayan sohbetler de vardır (ör. hiç kaydedilmemiş numaradan gelen ilk mesaj), bu yüzden Contact null olabilir.
@@ -39,25 +40,25 @@ import com.squareup.moshi.JsonClass
  * @param isUnread Okunmadı rozeti gösterilsin mi (web paneldeki \"Görülmedi\" ile aynı kural): elle okundu/okunmadı işaretlenmişse  o geçerlidir; işaret yoksa son mesaj müşteriden gelmiş ve okunmamışsa true.
  * @param ticket 
  */
-
+@Serializable
 
 data class ConversationListItemDto (
 
     /* Müşterinin telefonu (sohbetin kimliği). Diğer tüm conversation uçlarına phoneNumber olarak verilir. */
-    @Json(name = "phoneNumber")
+    @SerialName(value = "phoneNumber")
     val phoneNumber: kotlin.String? = null,
 
-    @Json(name = "contact")
+    @SerialName(value = "contact")
     val contact: ConversationContactDto? = null,
 
-    @Json(name = "lastMessage")
+    @SerialName(value = "lastMessage")
     val lastMessage: ConversationLastMessageDto? = null,
 
     /* Okunmadı rozeti gösterilsin mi (web paneldeki \"Görülmedi\" ile aynı kural): elle okundu/okunmadı işaretlenmişse  o geçerlidir; işaret yoksa son mesaj müşteriden gelmiş ve okunmamışsa true. */
-    @Json(name = "isUnread")
+    @SerialName(value = "isUnread")
     val isUnread: kotlin.Boolean? = null,
 
-    @Json(name = "ticket")
+    @SerialName(value = "ticket")
     val ticket: ConversationTicketDto? = null
 
 ) {

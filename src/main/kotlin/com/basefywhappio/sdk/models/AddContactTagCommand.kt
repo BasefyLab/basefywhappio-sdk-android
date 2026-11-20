@@ -24,8 +24,9 @@
 package com.basefywhappio.sdk.models
 
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Contextual
 
 /**
  * Kişiye etiket ekler. Backoffice'teki AddContactTag tek uçta ekle/kaldır (toggle) yapıyordu; mobilde  çift dokunma/yeniden deneme etiketi istemeden kaldırmasın diye ekleme ve kaldırma ayrı ve idempotent.
@@ -33,16 +34,16 @@ import com.squareup.moshi.JsonClass
  * @param contactId Etiketin ekleneceği kişinin id'si.
  * @param tagId Eklenecek etiketin id'si (tag/list veya tag/contacttags).
  */
-
+@Serializable
 
 data class AddContactTagCommand (
 
     /* Etiketin ekleneceği kişinin id'si. */
-    @Json(name = "contactId")
+    @SerialName(value = "contactId")
     val contactId: kotlin.Int? = null,
 
     /* Eklenecek etiketin id'si (tag/list veya tag/contacttags). */
-    @Json(name = "tagId")
+    @SerialName(value = "tagId")
     val tagId: kotlin.Int? = null
 
 ) {

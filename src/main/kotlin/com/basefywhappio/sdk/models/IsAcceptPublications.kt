@@ -24,25 +24,30 @@
 package com.basefywhappio.sdk.models
 
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.Serializer
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.builtins.serializer
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
+
 
 /**
  * 
  *
  * Values: _0,_1,_2
  */
-
-@JsonClass(generateAdapter = false)
+@Serializable(with = IsAcceptPublicationsSerializer::class)
 enum class IsAcceptPublications(val value: kotlin.Int) {
 
-    @Json(name = "0")
     _0(0),
 
-    @Json(name = "1")
     _1(1),
 
-    @Json(name = "2")
     _2(2);
 
     /**
@@ -71,4 +76,19 @@ enum class IsAcceptPublications(val value: kotlin.Int) {
         }
     }
 }
+
+internal object IsAcceptPublicationsSerializer : KSerializer<IsAcceptPublications> {
+    override val descriptor = kotlin.Int.serializer().descriptor
+
+    override fun deserialize(decoder: Decoder): IsAcceptPublications {
+        val value = decoder.decodeSerializableValue(kotlin.Int.serializer())
+        return IsAcceptPublications.entries.firstOrNull { it.value == value }
+            ?: throw IllegalArgumentException("Unknown enum value: $value")
+    }
+
+    override fun serialize(encoder: Encoder, value: IsAcceptPublications) {
+        encoder.encodeSerializableValue(kotlin.Int.serializer(), value.value)
+    }
+}
+
 

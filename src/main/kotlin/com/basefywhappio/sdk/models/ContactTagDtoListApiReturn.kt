@@ -25,8 +25,9 @@ package com.basefywhappio.sdk.models
 
 import com.basefywhappio.sdk.models.ContactTagDto
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Contextual
 
 /**
  * 
@@ -37,23 +38,23 @@ import com.squareup.moshi.JsonClass
  * @param internalMessage 
  * @param errors 
  */
-
+@Serializable
 
 data class ContactTagDtoListApiReturn (
 
-    @Json(name = "success")
+    @SerialName(value = "success")
     val success: kotlin.Boolean? = null,
 
-    @Json(name = "data")
+    @SerialName(value = "data")
     val `data`: kotlin.collections.List<ContactTagDto>? = null,
 
-    @Json(name = "message")
+    @SerialName(value = "message")
     val message: kotlin.String? = null,
 
-    @Json(name = "internalMessage")
+    @SerialName(value = "internalMessage")
     val internalMessage: kotlin.String? = null,
 
-    @Json(name = "errors")
+    @SerialName(value = "errors")
     val errors: kotlin.collections.List<kotlin.String>? = null
 
 ) {

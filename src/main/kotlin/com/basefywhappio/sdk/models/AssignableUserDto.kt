@@ -24,8 +24,9 @@
 package com.basefywhappio.sdk.models
 
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Contextual
 
 /**
  * Sohbetin atanabileceği temsilci.
@@ -33,16 +34,16 @@ import com.squareup.moshi.JsonClass
  * @param id Temsilcinin kullanıcı id'si; conversation/assign isteğinde userId olarak gönderilir.
  * @param fullName Temsilcinin adı soyadı.
  */
-
+@Serializable
 
 data class AssignableUserDto (
 
     /* Temsilcinin kullanıcı id'si; conversation/assign isteğinde userId olarak gönderilir. */
-    @Json(name = "id")
+    @SerialName(value = "id")
     val id: kotlin.Int? = null,
 
     /* Temsilcinin adı soyadı. */
-    @Json(name = "fullName")
+    @SerialName(value = "fullName")
     val fullName: kotlin.String? = null
 
 ) {

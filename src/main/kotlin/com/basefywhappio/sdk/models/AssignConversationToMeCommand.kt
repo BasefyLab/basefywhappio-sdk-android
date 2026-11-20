@@ -24,20 +24,21 @@
 package com.basefywhappio.sdk.models
 
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Contextual
 
 /**
  * Sohbeti oturumdaki temsilcinin üstüne alır. Backoffice AssignToMe ile aynı kural: çevrimdışı temsilci  üstüne alamaz (atamalar çevrimiçi temsilciler arasında dağıtılıyor; çevrimdışıya düşen sohbet cevapsız kalır).
  *
  * @param phoneNumber Müşterinin telefonu (conversation/list içindeki phoneNumber).
  */
-
+@Serializable
 
 data class AssignConversationToMeCommand (
 
     /* Müşterinin telefonu (conversation/list içindeki phoneNumber). */
-    @Json(name = "phoneNumber")
+    @SerialName(value = "phoneNumber")
     val phoneNumber: kotlin.String? = null
 
 ) {
