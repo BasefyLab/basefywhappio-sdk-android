@@ -1,0 +1,53 @@
+name: Android SDK test
+
+on:
+  push:
+    tags: ['*']
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "8.14"
+
+      - name: SDK'yı derle
+        run: gradle assemble
+
+      - name: Duman testi
+        working-directory: SmokeTest
+        run: gradle run
+        env:
+          SDK_USER: ${{ secrets.SDK_USER }}
+          SDK_PASS: ${{ secrets.SDK_PASS }}
+
+      - name: JitPack yayınını doğrula
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          BASE="https://jitpack.io/com/github/BasefyLab/basefywhappio-sdk-android/${GITHUB_REF_NAME}"
+          POM="${BASE}/basefywhappio-sdk-android-${GITHUB_REF_NAME}.pom"
+          deadline=$(( $(date +%s) + 15 * 60 ))
+          while true; do
+            code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 120 "$POM" || echo 000)
+            echo "$(date -u +%H:%M:%S) HTTP $code"
+            if [ "$code" = "200" ]; then
+              echo "JitPack yayını hazır: $POM"
+              exit 0
+            fi
+            if [ "$(date +%s)" -ge "$deadline" ]; then
+              echo "::error::JitPack yayını 15 dakika içinde hazır olmadı."
+              echo "---- build.log (son 50 satır) ----"
+              curl -s --max-time 60 "${BASE}/build.log" | tail -n 50
+              exit 1
+            fi
+            sleep 30
+          done
