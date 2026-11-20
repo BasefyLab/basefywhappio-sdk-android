@@ -33,7 +33,7 @@ dependencyResolutionManagement {
 **2.** Modülün `build.gradle` dosyasına bağımlılığı ekleyin:
 
 ```gradle
-implementation 'com.github.BasefyLab:basefywhappio-sdk-android:1.0.2'
+implementation 'com.github.BasefyLab:basefywhappio-sdk-android:1.0.3'
 ```
 
 **3.** Uygulamanın `AndroidManifest.xml` dosyasında internet izni olduğundan emin olun:
@@ -85,19 +85,73 @@ Her metodun parametreleri ve dönüş tipi için [Uç noktalar](#uç-noktalar) t
 
 ## Kimlik doğrulama
 
-API, JWT tabanlı Bearer token kullanır.
+API, JWT tabanlı Bearer token kullanır. Her kullanıcı kendi Backoffice kullanıcı adı ve parolasıyla giriş yapar. Giriş bilgilerini uygulama koduna yazmayın, kullanıcıdan giriş ekranında alın.
 
-1. `AuthApi.authLoginPost` ile kullanıcı adı ve parola göndererek token alın.
-2. Token'ı SDK'ya bir kere tanıtın. Sonraki tüm isteklere `Authorization: Bearer {token}` başlığı otomatik eklenir:
+### Giriş
+
+`AuthApi.authLoginPost` ile token alın ve SDK'ya bir kere tanıtın. Sonraki tüm isteklere `Authorization: Bearer {token}` başlığı otomatik eklenir:
 
 ```kotlin
+import com.basefywhappio.sdk.apis.AuthApi
 import com.basefywhappio.sdk.infrastructure.ApiClient
+import com.basefywhappio.sdk.models.LoginRequest
 
-ApiClient.apiKey["Authorization"] = token
-ApiClient.apiKeyPrefix["Authorization"] = "Bearer"
+val result = withContext(Dispatchers.IO) {
+    AuthApi().authLoginPost(LoginRequest(username = kullaniciAdi, password = parola))
+}
+
+val token = result.data?.token
+if (result.success == true && token != null) {
+    ApiClient.apiKey["Authorization"] = token
+    ApiClient.apiKeyPrefix["Authorization"] = "Bearer"
+    // Token'ı güvenli saklayın, aşağıya bakın.
+} else {
+    // Hatalı parola, kilitli veya pasif hesap
+    hataGoster(result.message)
+}
 ```
 
-3. Herhangi bir istek **HTTP 401** dönerse token geçersizdir, süresi dolmuştur ya da hesap pasiftir. Kullanıcıyı yeniden giriş ekranına yönlendirin.
+Hatalı parola, kilitli hesap, pasif hesap ya da işletmeye bağlı olmayan hesapta istisna fırlatılmaz. Yanıt HTTP 200 ile gelir, `success` alanı `false` olur ve `message` alanı kullanıcıya gösterilebilir. Art arda hatalı denemelerde bekleme süresi uygulanır ve hesap kilitlenebilir.
+
+Giriş yanıtının `data` alanında kullanıcının bilgileri de gelir: `id`, `fullName`, `emailAddress`, `tenantId`, `userType` ve `permissions`. Bu bilgileri veren ayrı bir uç nokta yoktur. İhtiyacınız varsa girişte saklayın. `permissions` yalnızca menü ve buton göstermek içindir. Yetki her istekte sunucuda yeniden kontrol edilir.
+
+### Token'ı saklama
+
+Token uzun ömürlüdür (şu an 200 gün) ve yenileme (refresh) ucu yoktur. `ApiClient.apiKey` kalıcı değildir, uygulama kapanınca silinir. Kullanıcının her açılışta yeniden giriş yapmaması için:
+
+1. Token'ı şifreli saklayın, örneğin Android Keystore ile şifrelenmiş bir depoda.
+2. Uygulama açılırken saklanan token'ı yukarıdaki gibi `ApiClient.apiKey` ve `ApiClient.apiKeyPrefix` ile SDK'ya yeniden tanıtın.
+
+Token `ApiClient` üzerinde global tutulur ve tüm API sınıfları aynı token'ı kullanır. Bu yapı, aynı anda tek kullanıcı oturumu olan uygulamalar için uygundur.
+
+> ⚠️ OkHttp loglaması kullanıyorsanız `HttpLoggingInterceptor` seviyesini `HEADERS` veya `BODY` yapmayın. Bu seviyeler token'ı ve parolayı loglara yazar.
+
+### Oturumun sona ermesi (HTTP 401)
+
+Herhangi bir istek **HTTP 401** dönerse token geçersizdir, süresi dolmuştur ya da hesap pasiftir. SDK bu durumda `ClientException` fırlatır. Saklanan token'ı silip kullanıcıyı giriş ekranına yönlendirin:
+
+```kotlin
+import com.basefywhappio.sdk.infrastructure.ClientException
+
+try {
+    val tags = withContext(Dispatchers.IO) { tagApi.tagListGet() }
+    // ...
+} catch (e: ClientException) {
+    if (e.statusCode == 401) {
+        cikisYap()
+        girisEkraninaGit()
+    }
+}
+```
+
+### Çıkış
+
+Token'ı SDK'dan ve sakladığınız yerden silin:
+
+```kotlin
+ApiClient.apiKey.remove("Authorization")
+ApiClient.apiKeyPrefix.remove("Authorization")
+```
 
 ## Yanıt biçimi ve hata kodları
 
